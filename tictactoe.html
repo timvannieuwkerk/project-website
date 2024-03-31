@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style-tictactoe.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/3bfd3ce9e5.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Tic Tac Toe!</title>
+  </head>
+  <body>
+    <main>
+      <div class="grid" data-id="grid">
+        <!-- Turn indicator -->
+        <div class="turn" data-id="turn">
+          <i class="fa-solid fa-x turquoise"></i>
+          <p class="yellow turquoise">Player 1, you're up!</p>
+        </div>
+
+        <!-- Actions menu -->
+        <div class="actions" data-id="actions">
+          <button class="menu-button" data-id="menu-button">
+            Actions
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="items border hidden" data-id="menu-items">
+            <button data-id="reset">Reset</button>
+            <button data-id="new-round">New Round</button>
+          </div>
+        </div>
+
+        <!-- Game squares -->
+        <div id="1" class="square shadow" data-id="square"></div>
+        <div id="2" class="square shadow" data-id="square"></div>
+        <div id="3" class="square shadow" data-id="square"></div>
+        <div id="4" class="square shadow" data-id="square"></div>
+        <div id="5" class="square shadow" data-id="square"></div>
+        <div id="6" class="square shadow" data-id="square"></div>
+        <div id="7" class="square shadow" data-id="square"></div>
+        <div id="8" class="square shadow" data-id="square"></div>
+        <div id="9" class="square shadow" data-id="square"></div>
+
+        <!-- Game scores -->
+        <div class="score shadow" id="p1">
+          <p>Player 1</p>
+          <span data-id="p1">0 Wins</span>
+        </div>
+        <div class="score shadow" id="ties">
+          <p>Ties</p>
+          <span data-id="ties">0</span>
+        </div>
+        <div class="score shadow" id="p2">
+          <p>Player 2</p>
+          <span data-id="p2">0 Wins</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>---Project in development---</p>
+      <a href="index.html">Get back to the homepage!</a>
+    </footer>
+
+    <div class="model hidden" data-id="model">
+      <div class="model-contents">
+        <p data-id="model-text">Player 1 wins!</p>
+        <button data-id="model-button">Play again?</button>
+      </div>
+    </div>
+
+    <script src="js-tictactoe/app.js" type="module"></script>
+    <!-- <script src="js-tictactoe/view.js"></script> -->
+  </body>
+</html>
