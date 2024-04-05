@@ -194,4 +194,8 @@ a {
     .intro, .project-1, .project-2, .project-3, .project-1 img, .project-2 img, .project-3 img {
         width: auto;
     }
+
+    .intro {
+        border-radius: 0px;
+    }
 }
