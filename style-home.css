@@ -19,7 +19,7 @@ h1 {
 }
 
 .intro {
-    max-width: 700px;
+    width: 700px;
     display: flex;
     align-items: center;
     margin-left: auto;
@@ -166,4 +166,32 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+@media (max-width: 1200px) {
+    .projects-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .project-1, .project-2, .project-3 {
+        margin-bottom: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .intro {
+        width: 400px;
+        flex-direction: column;
+    }
+    .about {
+        padding: 30px;
+        padding-top: 0;
+    }
+}
+
+@media (max-width: 400px) {
+    .intro, .project-1, .project-2, .project-3, .project-1 img, .project-2 img, .project-3 img {
+        width: auto;
+    }
 }
