@@ -129,13 +129,19 @@ a {
     align-items: center;
     justify-content: center;
     box-shadow: 21px 22px 85px -28px rgba(0, 0, 0, 0.64);
+    position: relative;
 }
 
-.project-2 img {
-    width: 200px;
+#todolist {
     height: 200px;
     box-shadow: 0px 0px 8px 8px rgba(255, 255, 255, 1);
-    margin: 45px;
+    margin: 45px 67.73px 45px 67.73px;
+}
+
+#in-progress {
+    height: 250px;
+    position: absolute;
+    top: 75px;
 }
 
 .project-2 div {
@@ -153,9 +159,10 @@ a {
     align-items: center;
     justify-content: center;
     box-shadow: 21px 22px 85px -28px rgba(0, 0, 0, 0.64);
+    position: relative;
 }
 
-.project-3 img {
+#placeholder {
     width: 200px;
     height: 200px;
     box-shadow: 0px 0px 8px 8px rgba(255, 255, 255, 1);
