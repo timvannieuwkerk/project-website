@@ -44,6 +44,12 @@ html, body {
     border: 1px solid rgba(211, 211, 211, 0.4) !important;
 }
 
+h1 {
+    color: white;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 80px);
