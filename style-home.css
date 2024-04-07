@@ -214,4 +214,8 @@ a {
   .intro {
     border-radius: 0px;
   }
+
+  #in-progress {
+    height: 200px;
+  }
 }
