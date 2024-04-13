@@ -46,6 +46,7 @@ main {
 .to-do-overview {
   grid-column: 1 / 4;
   grid-row: 3;
+  padding: 2rem;
 }
 
 h1,
@@ -54,19 +55,19 @@ h4 {
   color: var(--title);
 }
 
-.make-to-do-item h2 {
+h2 {
   padding-bottom: 1.5rem;
   font-size: 2rem;
   font-weight: 500;
 }
 
-.make-to-do-item h4 {
+h4 {
   padding-bottom: 0.5rem;
   font-size: 1.2rem;
   font-weight: 400;
 }
 
-input {
+.make-to-do-item input {
   font-size: 1.2rem;
   width: 100%;
   padding: 7px;
@@ -113,3 +114,43 @@ input {
   color: #ffffff;
   cursor: pointer;
 } */
+
+.todo-item {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  background-color: #ffffff;
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.todo-item label {
+  padding: 0px 7px 0px 14px;
+  align-self: center;
+}
+
+.text {
+  font-size: 1.2rem;
+  flex: 1;
+  border: none;
+  padding: 7px;
+  border: none;
+  background-color: transparent;
+}
+
+.date-todo {
+  border: none;
+  background-color: transparent;
+  padding: 0px 14px 0px 7px;
+  font-size: 1.2rem;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+}
+
+.read-only {
+  background-color: #e3e3e3;
+}
