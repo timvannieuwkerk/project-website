@@ -9,6 +9,14 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
+    <script
+      src="https://kit.fontawesome.com/3bfd3ce9e5.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
 
     <title>Document</title>
   </head>
@@ -32,49 +40,40 @@
           />
 
           <h4>Categorie</h4>
-          <div class="options">
-            <label for="category1">
-              <input
-                type="radio"
-                name="category"
-                id="category1"
-                value="Project 1"
-                required="required"
-              />
-              <p>Project 1</p>
-            </label>
-
-            <label for="category2">
-              <input
-                type="radio"
-                name="category"
-                id="category2"
-                value="Project 2"
-              />
-              <p>Project 2</p>
-            </label>
+          <div class="categories-menu">
+            <input
+              type="button"
+              class="categories-choose grijs"
+              value="Kies een categorie"
+              id="category"
+              name="category"
+            />
+            <div class="categories-options hidden" id="option">
+              <button class="option" type="button">Thuis</button>
+              <button class="option" type="button">Werk</button>
+            </div>
           </div>
 
           <h4>Voor welke datum moet deze af zijn?</h4>
           <input
             type="date"
+            class="grijs"
             id="date"
-            placeholder="Kies datum"
             name="date"
             required="required"
           />
-          <!-- JAVASCRIPT, onfocus="(this.type = 'date')" -->
           <br />
 
           <input type="submit" value="Opslaan" id="submit" />
+          <h5 class="error hidden">Categorie mag niet leeg zijn!</h5>
         </form>
       </section>
 
       <section class="to-do-overview">
         <h2>To Do overzicht</h2>
-        <h4>Project 1</h4>
+        <h4>Thuis</h4>
         <div class="project-1"></div>
-        <h4>Project 2</h4>
+        <h4>Werk</h4>
         <div class="project-2"></div>
       </section>
     </main>
