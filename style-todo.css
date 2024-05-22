@@ -165,6 +165,7 @@ h4 {
   width: 200px;
   flex-grow: 1;
   flex-shrink: 0;
+  color: #000;
 }
 
 .date-todo {
@@ -182,7 +183,7 @@ footer {
 }
 
 .read-only {
-  background-color: #e3e3e3;
+  background-color: #f2f2f2;
 }
 
 .categories-menu {
@@ -290,3 +291,70 @@ h5 {
   cursor: pointer;
   color: red;
 }
+
+@media (max-width: 550px) {
+  .todo-item {
+    display: grid;
+    width: 100%;
+    height: 80px;
+    grid-template-rows: 40px 40px;
+    grid-template-columns: 1fr repeat(2, 40px);
+    grid-template-areas:
+      "text text text"
+      "date edit delete";
+  }
+
+  .text {
+    grid-area: text;
+    width: 100%;
+  }
+
+  .date-todo {
+    grid-area: date;
+  }
+
+  .fa-trash-can {
+    grid-area: delete;
+    position: relative;
+    padding: 9px;
+    margin: 0;
+  }
+
+  .fa-pen-to-square {
+    grid-area: edit;
+    position: relative;
+    padding: 9px;
+    margin: 0;
+  }
+}
+/* .todo-item {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  background-color: #ffffff;
+  display: flex;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.text {
+  font-size: 1.2rem;
+  border: none;
+  padding: 7px;
+  border: none;
+  background-color: transparent;
+  width: 200px;
+  flex-grow: 1;
+  flex-shrink: 0;
+  color: #000;
+}
+
+.date-todo {
+  border: none;
+  background-color: transparent;
+  padding: 0px 14px 0px 7px;
+  font-size: 1.2rem;
+  width: 200px;
+  flex-shrink: 1;
+} */
