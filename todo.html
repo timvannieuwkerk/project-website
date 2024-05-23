@@ -18,7 +18,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
 
-    <title>Document</title>
+    <title>Todo lijst</title>
   </head>
   <body>
     <main class="app">
@@ -38,9 +38,20 @@
             name="title"
             required="required"
           />
-
-          <h4>Categorie</h4>
           <div class="categories-menu">
+            <div class="categorie-nieuw">
+              <h4>Categorie</h4>
+              <i class="fa-regular fa-square-plus"></i>
+              <div class="nieuw hidden">
+                <h4>Nieuwe categorie</h4>
+                <input
+                  type="text"
+                  placeholder="Categorienaam"
+                  id="newCategoryName"
+                />
+                <i class="fa-regular fa-square-check"></i>
+              </div>
+            </div>
             <input
               type="button"
               class="categories-choose grijs"
@@ -48,10 +59,7 @@
               id="category"
               name="category"
             />
-            <div class="categories-options hidden" id="option">
-              <button class="option" type="button">Thuis</button>
-              <button class="option" type="button">Werk</button>
-            </div>
+            <div class="categories-options hidden" id="option"></div>
           </div>
 
           <h4>Voor welke datum moet deze af zijn?</h4>
@@ -69,13 +77,7 @@
         </form>
       </section>
 
-      <section class="to-do-overview">
-        <h2>To Do overzicht</h2>
-        <h4>Thuis</h4>
-        <div class="project-1"></div>
-        <h4>Werk</h4>
-        <div class="project-2"></div>
-      </section>
+      <section class="to-do-overview"></section>
     </main>
 
     <footer>
