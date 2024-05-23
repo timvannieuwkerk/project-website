@@ -1,198 +1,319 @@
-window.addEventListener("load", () => {
-  todos = JSON.parse(localStorage.getItem("todos")) || [];
-  const todoForm = document.querySelector("#todo-form");
+// Queryselectors
+const newCategoryMenuOpen = document.querySelector(".fa-square-plus");
+const newCategoryConfirm = document.querySelector(".fa-square-check");
+const newCategoryMenu = document.querySelector(".nieuw");
+const newCategoryName = document.querySelector("#newCategoryName");
+const todoForm = document.querySelector("#todo-form");
+const chooseCategoryButton = document.querySelector(".categories-choose");
+const errorCategoryCannotBeEmpty = document.querySelector(".error");
+const inputTitleField = document.querySelector("#title");
+const inputDateField = document.querySelector("#date");
+const chooseCategoryList = document.querySelector(".categories-options");
+const chooseDateButton = document.querySelector("#date");
+const toDoOverview = document.querySelector(".to-do-overview");
 
+// Loading the page
+window.addEventListener("load", () => {
+  // EventListeners
+  // 1. EventListener newCategoryMenuOpen
+  OpenNewCategoryMenu();
+
+  // 2. EventListener newCategoryConfirm
+  UpdateNewCategory();
+
+  // 3. EventListener chooseCategoryButton
+  OpenCategoryMenu();
+
+  // 4. EventListener chooseDateButton
+  OpenDateMenu();
+
+  // 5. EventListener Submit
+  SubmitNewToDo();
+
+  // 6. EventListener clickOnWindow
+  CloseOpenFields();
+
+  // Initieel categoriën en items weergeven
+  DisplayCategories();
+});
+
+// FUNCTIONS
+// A: EventListeners
+
+function OpenNewCategoryMenu() {
+  newCategoryMenuOpen.addEventListener("click", () => {
+    newCategoryMenu.classList.toggle("hidden");
+  });
+}
+
+function UpdateNewCategory() {
+  newCategoryConfirm.addEventListener("click", () => {
+    if (newCategoryName.value === "") {
+      newCategoryMenu.classList.toggle("hidden");
+    } else {
+      const categoryNew = { category: newCategoryName.value };
+
+      newCategoryName.value = "";
+      newCategoryMenu.classList.toggle("hidden");
+
+      categorieOverzicht.push(categoryNew);
+      localStorage.setItem("categories", JSON.stringify(categorieOverzicht));
+
+      DisplayCategories();
+    }
+  });
+}
+
+function OpenCategoryMenu() {
+  chooseCategoryButton.addEventListener("click", () => {
+    chooseCategoryList.classList.toggle("hidden");
+    chooseCategoryButton.classList.toggle("border");
+  });
+}
+
+function OpenDateMenu() {
+  chooseDateButton.addEventListener("click", () => {
+    chooseDateButton.classList.remove("grijs");
+  });
+}
+
+function SubmitNewToDo() {
   todoForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const categorie = document.querySelector(".categories-choose");
-    const error = document.querySelector(".error");
+    let todos = JSON.parse(localStorage.getItem("todos")) || [];
 
-    if (categorie.value === "Kies een categorie") {
-      error.classList.remove("hidden");
+    if (chooseCategoryButton.value === "Kies een categorie") {
+      errorCategoryCannotBeEmpty.classList.remove("hidden");
       return;
     }
 
     const todo = {
       title: event.target.elements.title.value,
-      category: event.target.elements.category.value,
+      category: chooseCategoryButton.value,
       date: event.target.elements.date.value,
     };
 
     todos.push(todo);
-
     localStorage.setItem("todos", JSON.stringify(todos));
 
+    inputTitleField.value = "";
+    chooseCategoryButton.value = "Kies een categorie";
+    chooseCategoryButton.classList.add("grijs");
+    inputDateField.value = "";
+    inputDateField.classList.add("grijs");
+
     DisplayTodos();
-
-    const name = document.querySelector("#title");
-    const categories = document.querySelector(".categories-choose");
-    const date = document.querySelector("#date");
-
-    name.value = "";
-    categories.value = "Kies een categorie";
-    categories.classList.add("grijs");
-    date.value = "";
-    date.classList.add("grijs");
+    CheckIfCategoryIsEmpty();
   });
+}
 
-  DisplayTodos();
-
-  const categoryChoose = document.querySelector(".categories-choose");
-
-  categoryChoose.addEventListener("click", () => {
-    const categoriesOptions = document.querySelector(".categories-options");
-    const categoriesChoose = document.querySelector(".categories-choose");
-
-    categoriesOptions.classList.toggle("hidden");
-    categoriesChoose.classList.toggle("border");
-  });
-
+function CloseOpenFields() {
   window.onclick = function (event) {
-    const categoriesOptions = document.querySelector(".categories-options");
-    const categoriesChoose = document.querySelector(".categories-choose");
-
     if (
       !event.target.matches(".categories-choose") &&
-      !categoriesOptions.classList.contains("hidden")
+      !chooseCategoryList.classList.contains("hidden")
     ) {
-      categoriesOptions.classList.add("hidden");
-      categoriesChoose.classList.remove("border");
-    }
-
-    const todoItem = document.querySelectorAll(".todo-item");
-
-    if (
-      !event.target.matches([
-        ".todo-item",
-        ".fa-pen-to-square",
-        ".date-todo",
-        ".text",
-        ".fa-trash-can",
-      ])
-    ) {
-      for (let i = 0; i < todoItem.length; i++) {
-        todoItem[i].classList.add("read-only");
-        for (let j = 0; j < 2; j++) {
-          todoItem[i].children[j].readOnly = true;
-        }
-      }
+      chooseCategoryList.classList.add("hidden");
+      chooseCategoryButton.classList.remove("border");
     }
   };
+}
+
+// B: Displayfunctions
+
+function DisplayTodos() {
+  let todos = JSON.parse(localStorage.getItem("todos")) || [];
+
+  const allCategories = document.querySelectorAll(".to-do-category");
+
+  for (let i = 0; i < allCategories.length; i++) {
+    allCategories[i].children[1].innerHTML = "";
+  }
+
+  todos.forEach((todo) => {
+    const newTodoItem = document.createElement("div");
+    const newTitle = document.createElement("input");
+    const newDate = document.createElement("input");
+    const editButton = document.createElement("i");
+    const deleteButton = document.createElement("i");
+
+    newTodoItem.classList.add("todo-item", "read-only");
+    newTitle.classList.add("text");
+    newDate.classList.add("date-todo");
+    editButton.classList.add("fa-solid", "fa-pen-to-square");
+    deleteButton.classList.add("fa-regular", "fa-trash-can");
+
+    newTitle.value = todo.title;
+    newDate.value = todo.date;
+
+    newTitle.readOnly = true;
+    newDate.type = "date";
+    newDate.readOnly = true;
+
+    newTodoItem.append(newTitle, newDate, editButton, deleteButton);
+
+    for (let i = 0; i < allCategories.length; i++) {
+      if (allCategories[i].firstElementChild.innerText === todo.category) {
+        allCategories[i].children[1].appendChild(newTodoItem);
+      }
+    }
+
+    // EventListeners voor Buttons
+    const titleToFind = newTitle.value;
+    const categoryToFind = todo.category;
+    const dateToFind = newDate.value;
+
+    editButton.addEventListener("click", () => {
+      let todos = JSON.parse(localStorage.getItem("todos")) || [];
+
+      if (newTodoItem.classList.contains("read-only")) {
+        newTodoItem.classList.toggle("read-only");
+        newTitle.readOnly = !newTitle.readOnly;
+        newDate.readOnly = !newDate.readOnly;
+        editButton.classList.remove("fa-pen-to-square");
+        editButton.classList.add("fa-floppy-disk");
+      } else {
+        const updatedTodo = {
+          title: newTitle.value,
+          category: categoryToFind,
+          date: newDate.value,
+        };
+
+        const indexInTodos = todos.findIndex(
+          (todo) =>
+            todo.title === titleToFind &&
+            todo.category === categoryToFind &&
+            todo.date === dateToFind
+        );
+
+        todos[indexInTodos] = updatedTodo;
+        localStorage.setItem("todos", JSON.stringify(todos));
+
+        newTodoItem.classList.toggle("read-only");
+        newTitle.readOnly = !newTitle.readOnly;
+        newDate.readOnly = !newDate.readOnly;
+        editButton.classList.remove("fa-floppy-disk");
+        editButton.classList.add("fa-pen-to-square");
+      }
+    });
+
+    deleteButton.addEventListener("click", () => {
+      todos = JSON.parse(localStorage.getItem("todos")) || [];
+
+      const indexInTodos = todos.findIndex(
+        (todo) =>
+          todo.title === titleToFind &&
+          todo.category === categoryToFind &&
+          todo.date === dateToFind
+      );
+
+      if (indexInTodos !== -1) {
+        todos.splice(indexInTodos, 1);
+      }
+
+      localStorage.setItem("todos", JSON.stringify(todos));
+
+      DisplayTodos();
+      CheckIfCategoryIsEmpty();
+    });
+  });
+  DateTodaySetting();
+}
+
+function DisplayCategories() {
+  categorieOverzicht = JSON.parse(localStorage.getItem("categories")) || [];
+
+  toDoOverview.innerHTML = "";
+  chooseCategoryList.innerHTML = "";
+
+  const toDoTitle = document.createElement("h2");
+  toDoTitle.innerText = "To Do Overzicht";
+
+  toDoOverview.appendChild(toDoTitle);
+
+  categorieOverzicht.forEach((cat) => {
+    const categoryButton = document.createElement("button");
+
+    categoryButton.classList.add("option");
+    categoryButton.type = "button";
+    categoryButton.innerText = cat.category;
+
+    chooseCategoryList.appendChild(categoryButton);
+
+    const categoryDivMain = document.createElement("div");
+    const categoryTitle = document.createElement("h4");
+    const categoryDivSecundary = document.createElement("div");
+
+    categoryDivMain.classList.add("to-do-category");
+    categoryTitle.innerText = cat.category;
+
+    categoryDivMain.appendChild(categoryTitle);
+    categoryDivMain.appendChild(categoryDivSecundary);
+
+    toDoOverview.appendChild(categoryDivMain);
+  });
 
   const categoryOptionsIndividueel = document.querySelectorAll(".option");
 
   categoryOptionsIndividueel.forEach((option) => {
     option.addEventListener("click", (event) => {
-      const error = document.querySelector(".error");
-      error.classList.add("hidden");
+      errorCategoryCannotBeEmpty.classList.add("hidden");
 
       let newOption = event.target.innerHTML;
 
-      const categoriesChoose = document.querySelector(".categories-choose");
-      categoriesChoose.value = newOption;
+      chooseCategoryButton.value = newOption;
 
-      const categoriesOptions = document.querySelector(".categories-options");
-      categoriesOptions.classList.toggle("hidden");
-      categoriesChoose.classList.toggle("border");
-
-      let categoryMenu = document.querySelector(".categories-menu input");
-
-      categoryMenu.classList.remove("grijs");
+      chooseCategoryList.classList.toggle("hidden");
+      chooseCategoryButton.classList.toggle("border");
+      chooseCategoryButton.classList.remove("grijs");
     });
   });
 
-  const dateSelector = document.querySelector("#date");
+  DisplayTodos();
+  CheckIfCategoryIsEmpty();
+}
 
-  dateSelector.addEventListener("click", (event) => {
-    dateSelector.classList.remove("grijs");
-  });
-
+// C: Other functions
+function DateTodaySetting() {
   const datumVandaag = new Date().toISOString().split("T")[0].toString();
+  document.querySelectorAll(["#date", ".date-todo"]).forEach((x) => {
+    x.setAttribute("min", datumVandaag);
+  });
+}
 
-  document.querySelector("#date").setAttribute("min", datumVandaag);
-});
+function CheckIfCategoryIsEmpty() {
+  const todos = JSON.parse(localStorage.getItem("todos")) || [];
+  const categorieOverzicht =
+    JSON.parse(localStorage.getItem("categories")) || [];
+  const categoryOptionsTitles = document.querySelectorAll(".to-do-category h4");
 
-function DisplayTodos() {
-  const projectList1 = document.querySelector(".project-1");
-  const projectList2 = document.querySelector(".project-2");
+  for (let i = 0; i < categoryOptionsTitles.length; i++) {
+    const category = categoryOptionsTitles[i].innerHTML;
 
-  projectList1.innerHTML = "";
-  projectList2.innerHTML = "";
+    if (!todos.some((todo) => todo.category === category)) {
+      categoryOptionsTitles[i].classList.add("red-delete");
 
-  todos.forEach((todo) => {
-    const todoItem = document.createElement("div");
-    const title = document.createElement("input");
-    const date = document.createElement("input");
-    const edit = document.createElement("i");
-    const deleteItem = document.createElement("i");
+      categoryOptionsTitles[i].addEventListener("click", (event) => {
+        console.log("click");
 
-    todoItem.classList.add("todo-item");
-    todoItem.classList.add("read-only");
-    title.classList.add("text");
-    date.classList.add("date-todo");
-    edit.classList.add("fa-solid", "fa-pen-to-square");
-    deleteItem.classList.add("fa-regular", "fa-trash-can");
+        const indexIncategorieOverzicht = categorieOverzicht.findIndex(
+          (category) => category.category === categoryOptionsTitles[i].innerHTML
+        );
 
-    title.value = todo.title;
-    date.value = todo.date;
+        if (indexIncategorieOverzicht !== -1) {
+          categorieOverzicht.splice(indexIncategorieOverzicht, 1);
+        }
 
-    date.type = "date";
+        localStorage.setItem("categories", JSON.stringify(categorieOverzicht));
 
-    title.readOnly = "readonly";
-    date.readOnly = "readonly";
+        console.log(categorieOverzicht);
 
-    todoItem.appendChild(title);
-    todoItem.appendChild(date);
-    todoItem.appendChild(edit);
-    todoItem.appendChild(deleteItem);
-
-    if (todo.category === "Thuis") {
-      projectList1.appendChild(todoItem);
-    } else if (todo.category === "Werk") {
-      projectList2.appendChild(todoItem);
+        DisplayCategories();
+        CheckIfCategoryIsEmpty();
+      });
+    } else {
+      categoryOptionsTitles[i].classList.remove("red-delete");
     }
-  });
-
-  const editButton = document.querySelectorAll(".fa-pen-to-square");
-  const todoItem = document.querySelectorAll(".todo-item");
-
-  editButton.forEach((button, index) => {
-    button.addEventListener("click", (event) => {
-      todoItem[index].classList.toggle("read-only");
-      if (
-        (event.target.parentElement.children[0].readOnly = event.target
-          .parentElement.children[0].readOnly
-          ? false
-          : true)
-      );
-      if (
-        (event.target.parentElement.children[1].readOnly = event.target
-          .parentElement.children[1].readOnly
-          ? false
-          : true)
-      );
-    });
-  });
-
-  const deleteButton = document.querySelectorAll(".fa-trash-can");
-
-  deleteButton.forEach((button, index) => {
-    button.addEventListener("click", (event) => {
-      todos = JSON.parse(localStorage.getItem("todos")) || [];
-
-      const titleToFind = event.target.parentElement.children[0].value;
-      const dateToFind = event.target.parentElement.children[1].value;
-
-      const gevondenIndex = todos.findIndex(
-        (todo) => todo.title === titleToFind && todo.date === dateToFind
-      );
-
-      todos.splice(gevondenIndex, 1);
-
-      localStorage.setItem("todos", JSON.stringify(todos));
-
-      DisplayTodos();
-    });
-  });
+  }
 }
